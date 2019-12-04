@@ -1,0 +1,3 @@
+tasks:
+- init: npm install -g yarn && yarn global add @google/clasp && yarn add @types/google-apps-script
+  command: export PATH=$PATH:/home/gitpod/.yarn/bin
