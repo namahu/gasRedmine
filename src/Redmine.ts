@@ -14,7 +14,9 @@ class Redmine_ {
         this.baseURL = baseURL;
     }
 
-    getIssue
+    getIssues(params: any) {
+        const query: string = createQuery_(params);
+    }
 
     
-}
+};
