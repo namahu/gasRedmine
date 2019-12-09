@@ -1,21 +1,33 @@
-const getRedmine: Redmine = (email: string, pass: string, baseURL: string) => {
-    return new Redmine_(email, pass, baseURL);
+interface BasicAuthInfo {
+    userName: string;
+    pass: string;
+};
+
+const getRedmine = (APIKey: string, baseURL: string, basicAuthInfo: BasicAuthInfo | null): Redmine_ => {
+    return new Redmine_(APIKey, baseURL, basicAuthInfo);
 }
 
 class Redmine_ {
 
-    private email: string;
-    private pass: string;
-    private baseURL: string
+    private APIKey: string;
+    private baseURL: string;
+    private basicAuthInfo: BasicAuthInfo | null;
 
-    constructor(email: string, pass: string, baseURL: string) {
-        this.email = email;
-        this.pass = pass;
+    constructor(APIKey: string, baseURL: string, basicAuthInfo: BasicAuthInfo | null) {
+        this.APIKey = APIKey;
         this.baseURL = baseURL;
+        this.basicAuthInfo = basicAuthInfo || null;
     }
 
-    getIssues(params: any) {
-        const query: string = createQuery_(params);
+    getIssues(path: string, params: any = '') {
+        let query: string = '';
+        if(params) {
+            query = `?${params}`;
+        }
+        const reqPath: string = `${this.baseURL}${path}${query}`;
+        console.log(reqPath);
+        const req: Request_ = new Request_(this.APIKey, this.basicAuthInfo);
+        return req.get_(reqPath);
     }
 
     
