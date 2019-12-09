@@ -19,16 +19,14 @@ class Redmine_ {
         this.basicAuthInfo = basicAuthInfo || null;
     }
 
-    getIssues(path: string, params: any = '') {
+    getIssues(path: string, params: Params) {
         let query: string = '';
         if(params) {
-            query = `?${params}`;
+            query = `?${createQuery_(params)}`;
         }
         const reqPath: string = `${this.baseURL}${path}${query}`;
         console.log(reqPath);
         const req: Request_ = new Request_(this.APIKey, this.basicAuthInfo);
         return req.get_(reqPath);
     }
-
-    
 };

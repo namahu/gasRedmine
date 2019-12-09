@@ -1,5 +1,14 @@
-const createQuery_ = (params): string => {
+interface Params {
+    [key: string]: string
+};
 
-    return params.map(param => `${param.key}=${param.value}`).join('&');
-    
+const createQuery_ = (params: Params): string => {
+
+    let query: string[] = [];
+    for (const p in params) {
+        query.push(`${p}=${params[p]}`);
+    }
+
+    return query.join('&');
+
 };
