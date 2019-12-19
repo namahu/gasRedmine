@@ -1,21 +1,11 @@
-type Method = 'get' | 'post' | 'put';
-interface RequeestOptions {
-    method?: Method;
-    headers: {
-        'Content-Type': string;
-        'Authorization': string;
-        'X-Redmine-API-Key': string;
-    };
-    payload?: any;
-    muteHttpExceptions: boolean;
-}
+import * as rm from "./types/";
 
-class Request_ {
+export default class Request_ {
 
-    private options: RequeestOptions;
-    private basicAuthInfo: BasicAuthInfo | null;
+    private options: rm.RequeestOptions;
+    private basicAuthInfo: rm.BasicAuthInfo | null;
 
-    constructor(APIKey: string, basicAuthInfo: BasicAuthInfo | null) {
+    constructor(APIKey: string, basicAuthInfo: rm.BasicAuthInfo | null) {
 
         this.basicAuthInfo = basicAuthInfo;
         this.options = {
@@ -37,7 +27,7 @@ class Request_ {
 
     };
 
-    fetch_(path: string, options: RequeestOptions) {
+    fetch_(path: string, options: rm.RequeestOptions) {
         const res: GoogleAppsScript.URL_Fetch.HTTPResponse = UrlFetchApp.fetch(path, options);
         console.log(res);
         const resJson: any = JSON.parse(res.getContentText());
