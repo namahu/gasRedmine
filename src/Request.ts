@@ -1,11 +1,9 @@
-import * as rm from "./types/";
+class Request_ {
 
-export default class Request_ {
+    private options: RequeestOptions;
+    private basicAuthInfo: BasicAuthInfo | null;
 
-    private options: rm.RequeestOptions;
-    private basicAuthInfo: rm.BasicAuthInfo | null;
-
-    constructor(APIKey: string, basicAuthInfo: rm.BasicAuthInfo | null) {
+    constructor(APIKey: string, basicAuthInfo: BasicAuthInfo | null) {
 
         this.basicAuthInfo = basicAuthInfo;
         this.options = {
@@ -27,7 +25,7 @@ export default class Request_ {
 
     };
 
-    fetch_(path: string, options: rm.RequeestOptions) {
+    fetch_(path: string, options: RequeestOptions) {
         const res: GoogleAppsScript.URL_Fetch.HTTPResponse = UrlFetchApp.fetch(path, options);
         console.log(res);
         const resJson: any = JSON.parse(res.getContentText());
@@ -41,6 +39,12 @@ export default class Request_ {
 
     get_(path: string) {
         this.options.method = 'get';
+        return this.fetch_(path, this.options);
+    }
+
+    post_(path: string, payload: Payload) {
+        this.options.method = 'post';
+        this.options.payload = JSON.stringify(payload);
         return this.fetch_(path, this.options);
     }
 };

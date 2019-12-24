@@ -1,7 +1,3 @@
-interface Params {
-    [key: string]: string
-};
-
 const createQuery_ = (params: Params): string => {
 
     let query: string[] = [];
