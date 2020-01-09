@@ -28,13 +28,14 @@ class Request_ {
     fetch_(path: string, options: RequeestOptions) {
         const res: GoogleAppsScript.URL_Fetch.HTTPResponse = UrlFetchApp.fetch(path, options);
         console.log(res);
+        const headers: object = res.getAllHeaders();
         const resJson: any = JSON.parse(res.getContentText());
         if (resJson.error) {
             const errCode: string = resJson.error.code;
             const errMsg: string = resJson.error.message
             throw new Error(JSON.stringify({ errCode, errMsg }));
         }
-        return resJson;
+        return {headers, resJson};
     };
 
     get_(path: string) {
