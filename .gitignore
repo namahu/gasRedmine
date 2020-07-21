@@ -1,1 +1,6 @@
 .clasp.json
+node_modules/
+creds.json
+.clasprc.json
+request.http
+src/test.ts
